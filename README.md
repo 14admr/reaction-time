@@ -1,5 +1,10 @@
 # Reaction Time Test
 
+[![Frontend](https://img.shields.io/badge/Frontend-Vercel-00C7B7?style=flat&logo=vercel)](https://reaction-time-chi.vercel.app)
+[![Backend](https://img.shields.io/badge/Backend-Render-46E3B7?style=flat&logo=render)](https://reaction-time-backend.onrender.com)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat&logo=node.js)](https://nodejs.org/)
+
 A modern web application built with React and Node.js for measuring human reaction times. This project demonstrates cognitive assessment through an interactive game that tests users' response times to visual stimuli.
 
 > **Note**: This project is a fork and modernization of the original [reaction-time repository](https://github.com/PERSEUS-1337/reaction-time) by PERSEUS-1337. The original project was a collaborative effort where PERSEUS-1337 developed the backend and ADMR14 developed the frontend using vanilla HTML, CSS, and JavaScript. This version represents ADMR14's complete modernization of the frontend using React and modern web development practices, while maintaining the core functionality and purpose.
@@ -190,7 +195,13 @@ reaction-time/
 
 ## 🌐 Live Demo
 
-*Live demo will be available here once deployed*
+**🔗 [Try the Live Application](https://reaction-time-chi.vercel.app)**
+
+Experience the modernized reaction time test with:
+- **Trial Mode**: 10 iterations to practice
+- **Full Test**: 160 iterations for comprehensive assessment
+- **Real-time Results**: Immediate feedback and statistics
+- **Data Export**: Results automatically saved to Google Sheets
 
 ## 📝 License
 
