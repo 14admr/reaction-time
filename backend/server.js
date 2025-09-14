@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const {google} = require("googleapis");
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 require("dotenv").config();
 
@@ -26,6 +27,10 @@ function auth(req, res, next) {
 }
 
 express()
+    .use(cors({
+        origin: ['https://reaction-time-chi.vercel.app', 'http://localhost:3000'],
+        credentials: true
+    }))
     .use(bodyParser.urlencoded({ extended: true }))
     .use(logger)
     .use(express.json())
