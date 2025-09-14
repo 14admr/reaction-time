@@ -7,10 +7,7 @@ require("dotenv").config();
 
 // paths constants, to reduce typos
 const path = require("path");
-const gamePath = "/html/index.html";
-const loginPath = "/html/login.html";
-const instructionsPath = "/html/instructions.html";
-const trialPath = "/html/trial.html";
+const frontendBuildPath = path.join(__dirname, '../frontend/build');
 
 // middleware functions
 function logger(req, res, next) {
@@ -34,53 +31,41 @@ express()
     .use(express.json())
     .use(session({
 
-        secret: 'REACTION TIME',
+        secret: process.env.SESSION_SECRET || 'REACTION TIME',
         resave: false,
         saveUninitialized: true
 
     }))
-    .get("/", (req, res) => {
-
-        console.log(">Default Page");
-        console.log("Email is: "+ req.session.emailStored);
-        res.redirect("/login");
-
+    // Serve static files from the React app build directory
+    .use(express.static(frontendBuildPath))
+    
+    // API Routes
+    .post("/api/login", (req, res) => {
+        req.session.emailStored = req.body.user.email;
+        console.log("Email is: (session)"+ req.session.emailStored);
+        res.json({ success: true, redirectTo: "/instructions" });
     })
-    .use(express.static(path.join(__dirname+'/html')))
-    .get("/login", (req, res) => {
-
-        console.log(">Login Page");
-        res.sendFile(path.join(__dirname+loginPath));
-        console.log(">Email is: " + req.session.emailStored);
-
+    
+    .post("/api/logout", (req, res) => {
+        req.session.destroy((err) => {
+            if (err) {
+                console.log("Error destroying session:", err);
+                res.json({ success: false });
+            } else {
+                console.log("Session destroyed successfully");
+                res.json({ success: true, redirectTo: "/" });
+            }
+        });
     })
-    .get("/instructions", auth, (req, res) => {
-
-        console.log(">Instructions Page");
-        res.sendFile(path.join(__dirname+instructionsPath));
-
+    
+    .get("/api/auth-status", (req, res) => {
+        res.json({ authenticated: !!req.session.emailStored, email: req.session.emailStored || null });
     })
-    .get("/trial", auth, (req, res) => {
-
-        console.log(">Trial Page");
-        res.sendFile(path.join(__dirname+trialPath));
-    })
-    .get("/game", auth, (req, res) => {
-
-        console.log(">Game Page");
-        res.sendFile(path.join(__dirname+gamePath));
-
-    })
-    .get("/end", auth, (req, res) => {
-
-        console.log(">End Page");
-        res.send("Thank You!");
-
-    })
-    .post("/game", async (req, res) => {
+    
+    // Protected API routes (require authentication)
+    .post("/api/game", auth, async (req, res) => {
 
         const { data } = req.body;
-        console.log("Data = "+ data);
 
         let dateObj = new Date();
         let date = ("0" + dateObj.getDate()).slice(-2);
@@ -91,8 +76,9 @@ express()
         let seconds = dateObj.getSeconds();
         req.session.sessionDate = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
 
+        // Google Sheets API configuration
         const auth = new google.auth.GoogleAuth({
-            keyFile: "google-credentials.json",
+            keyFile: process.env.GOOGLE_CREDENTIALS_PATH || "google-credentials.json",
             scopes: "https://www.googleapis.com/auth/spreadsheets",
         });
     
@@ -102,25 +88,32 @@ express()
         // Instance of Google Sheets API
         const googleSheets = google.sheets({ version: "v4", auth: client });
     
-        const spreadsheetId = "18jCkI5Ut3VaO8jG7unzilpDdtB8zlnLjLtLvTqy2-io";
+        const spreadsheetId = process.env.GOOGLE_SHEETS_ID || "18jCkI5Ut3VaO8jG7unzilpDdtB8zlnLjLtLvTqy2-io";
     
-        // Get metadata about spreadsheet
-        const metaData = await googleSheets.spreadsheets.get({
-            auth,
-            spreadsheetId,
-        });
-    
-        // Read rows from spreadsheet
-        const getRows = await googleSheets.spreadsheets.values.get({
-            auth,
-            spreadsheetId,
-            range: "Sheet1!A:A",
+        // Prepare structured data for spreadsheet
+        let dataArray = [
+            req.session.sessionDate,
+            req.session.emailStored,
+            data.gameType,
+            data.iterations,
+            data.results.correctAnswers,
+            data.results.totalAnswers,
+            data.results.averageReactionTime,
+            data.results.accuracy
+        ];
+
+        // Add trial data (flattened for spreadsheet compatibility)
+        data.trials.forEach(trial => {
+            dataArray.push(
+                trial.iteration,
+                trial.number,
+                trial.color,
+                trial.keyPressed,
+                trial.reactionTime,
+                trial.correct ? 1 : 0
+            );
         });
 
-        let dataArray = [req.session.sessionDate, req.session.emailStored];
-        for (i = 0; i < data.length; i++) {
-            dataArray.push(data[i]);
-        }
         req.session.dataArray = dataArray;
 
         // Write row(s) to spreadsheet
@@ -137,11 +130,6 @@ express()
         });
 
         console.log("Successfully Submitted Email: "+req.session.emailStored);
-        res.redirect("/end");
-    })
-    .post("/login", (req, res) => {
-        req.session.emailStored = req.body.user.email;
-        console.log("Email is: (session)"+ req.session.emailStored);
-        res.redirect("/instructions");
+        res.json({ success: true, redirectTo: "/end" });
     })
     .listen(PORT, () => console.log(`Listening on ${ PORT }`));

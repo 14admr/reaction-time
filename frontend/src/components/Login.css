@@ -1,15 +1,4 @@
-body {
-    margin:0;
-    padding:0;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(120deg, #7fadf3, #e68df0);
-    position:relative;
-    height: 100vh;
-    overflow: hidden;
-}
-
-
-/* Inside Login Page */
+/* Login Page Styles */
 .center {
     position: absolute;
     top: 50%;
@@ -38,38 +27,6 @@ form .txt_field {
     border-bottom: 2px solid #adadad;
     margin: 30px 0;
 }
-
-/* Inside Instructions Page */
-.instruction-main {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80vw;
-    background: white;
-    border-radius: 10px;
-    padding-left: 3%;
-    padding-right: 3%;
-}
-
-.instruction-title h1 {
-    font-size: 250%;
-    text-align: center;
-    color: rgb(61, 61, 61);
-    padding: 1% 0 1% 0;
-    margin: auto;
-    border-bottom: 1px solid silver;
-}
-
-.instruction-txt [id="instruction-txt"] {
-    line-break: auto;
-    font-size: min(150%, 210%);
-    text-align: justify;
-    color: rgb(61, 61, 61);
-    padding: 0.2% 2% 2% 2%;
-    border-bottom: 1px solid silver;
-}
-
 
 /* Email Field Input */
 .txt_field input {
@@ -130,27 +87,12 @@ input[id="submit-email"] {
     outline: none;
 }
 
-input[type="submit"]:hover {
+input[id="submit-email"]:hover:not(:disabled) {
     border-color: #9DC4FD;
     transition: .2s;
 }
 
-/* Button in Instructions */
-input[id="instruction-submit"] {
-    width: 100%;
-    height: 50px;
-    margin-bottom: 3%;
-    border: 5px solid;
-    background: #5C9BF8;
-    border-radius: 25px;
-    font-size: 20px;
-    color: #e9f4fb;
-    font-weight: 700;
-    cursor: pointer;
-    outline: none;
-}
-
-input[id="instruction-submit"]:hover {
-    border-color: #9DC4FD;
-    transition: .2s;
+input[id="submit-email"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
