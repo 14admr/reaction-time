@@ -11,7 +11,7 @@ function Login() {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await fetch('/api/auth-status');
+        const response = await fetch(`${process.env.REACT_APP_API_URL || ''}/api/auth-status`);
         const data = await response.json();
         
         if (data.authenticated) {
@@ -31,7 +31,7 @@ function Login() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || ''}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

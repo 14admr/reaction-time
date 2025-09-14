@@ -9,7 +9,7 @@ function End() {
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
-      const response = await fetch('/api/logout', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || ''}/api/logout`, {
         method: 'POST',
       });
       
