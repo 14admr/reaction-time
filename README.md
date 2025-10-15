@@ -1,66 +1,62 @@
 # Reaction Time Test
 
-This project is a web application designed to collect user emails and record their reaction times through a series of interactive tests. It was developed as a commission for a client and deployed via Heroku. This project marks my first collaboration with ADMR14, and I am very proud of the outcome.
+[![Deployment](https://img.shields.io/badge/Deployed-Vercel-00C7B7?style=flat&logo=vercel)](https://reaction-time-chi.vercel.app)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat&logo=node.js)](https://nodejs.org/)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-336791?style=flat&logo=postgresql)](https://postgresql.org/)
 
-## Features
+A modern full-stack web application for measuring human reaction times. Built with React frontend and Express.js backend, deployed on Vercel and Render respectively.
 
-- **User Authentication**: Collects user emails to authenticate and track user sessions.
-- **Reaction Time Test**: Presents users with a series of tests to measure their reaction times.
-- **Data Storage**: Stores user data and test results in a Google Sheets spreadsheet.
-- **Responsive Design**: Ensures a seamless experience across different devices.
+> **Note**: This project is a modernization of the original [reaction-time repository](https://github.com/PERSEUS-1337/reaction-time) by PERSEUS-1337. Originally a collaboration between PERSEUS-1337 (backend) and ADMR14 (frontend), this version represents a complete modernization using React and modern deployment practices.
 
-## Technologies Used
+## 🎯 Overview
 
-- **Frontend**: HTML, CSS, JavaScript
-- **Backend**: Express.js, Node.js
-- **Deployment**: Heroku
-- **Data Storage**: Google Sheets API
+Interactive cognitive assessment tool that measures reaction times through a color-number association game. Users respond to visual stimuli based on specific rules, and their performance is tracked and analyzed for research purposes.
 
-## Project Structure
+## 🎮 How It Works
 
-- **index.html**: The main game page where the reaction time test is conducted.
-- **instructions.html**: Provides instructions on how to perform the reaction time test.
-- **login.html**: The login page where users submit their emails.
-- **trial.html**: A trial page for users to practice before the actual test.
-- **server.js**: The backend server handling routing, session management, and data storage.
+1. **Login** with email address
+2. **Trial Run** (10 iterations) to familiarize with the interface
+3. **Full Test** (160 iterations) for comprehensive data collection
+4. **Results** with detailed statistics and performance metrics
 
-## Installation
+### Response Rules
+- **Blue Numbers**: < 5 = Press 'Z', > 5 = Press 'X'
+- **Pink Numbers**: Even = Press 'M', Odd = Press 'N'
 
-To run this project locally, follow these steps:
+## 🛠️ Tech Stack
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/reaction-time.git
-   cd reaction-time
-   ```
+- **Frontend**: React 19, React Router v7, CSS Modules
+- **Backend**: Node.js, Express.js v4.17
+- **Database**: PostgreSQL (Supabase)
+- **Deployment**: Vercel (Frontend), Render (Backend)
+- **Authentication**: Session-based with cookies
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+## 🌐 Live Demo
 
-3. **Set up environment variables**:
-   Create a `.env` file in the root directory and add your Google Sheets API credentials:
-   ```env
-   GOOGLE_CREDENTIALS=path/to/your/google-credentials.json
-   ```
+**🔗 [Try the Application](https://reaction-time-chi.vercel.app)**
 
-4. **Run the server**:
-   ```bash
-   npm start
-   ```
+## 📊 Features
 
-5. **Access the application**:
-   Open your browser and navigate to `http://localhost:5000`.
+- **Real-time Performance Tracking**: Precise reaction time measurement
+- **User Authentication**: Secure session-based login system
+- **Data Persistence**: PostgreSQL database for research data storage
+- **Responsive Design**: Works across desktop and mobile devices
+- **Research-Ready**: Export functionality for data analysis
+- **Modern Architecture**: Separated frontend/backend deployment
 
-## Usage
+## 🏗️ Architecture
 
-1. **Login**: Users start by submitting their email on the login page.
-2. **Instructions**: After logging in, users are directed to the instructions page to understand the test.
-3. **Trial**: Users can practice the test on the trial page.
-4. **Test**: The main reaction time test is conducted on the game page.
-5. **Results**: Test results are displayed, and data is stored in Google Sheets.
+- **Frontend**: React SPA deployed on Vercel
+- **Backend**: Express.js API deployed on Render
+- **Database**: PostgreSQL hosted on Supabase
+- **Communication**: RESTful API with CORS configuration
 
-## Acknowledgments
+## 👥 Credits
 
-- **ADMR14**: For the collaboration and support throughout the project.
+- **PERSEUS-1337**: Original backend developer and project collaborator
+- **ADMR14**: Complete frontend modernization and full-stack deployment
+
+---
+
+*Portfolio project demonstrating modern web development practices including React, Node.js, PostgreSQL integration, and cloud deployment strategies.*
